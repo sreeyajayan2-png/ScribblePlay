@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScribblePlay | Drawing Challenge</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Home Screen -->
+        <section id="home-screen" class="screen active">
+            <header>
+                <h1>ScribblePlay</h1>
+                <p>Simple MVP Drawing Game</p>
+            </header>
+            <main>
+                <div class="difficulty-picker">
+                    <label for="difficulty">Select Difficulty:</label>
+                    <select id="difficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+                <button id="start-game" class="btn-primary">Start Game</button>
+                <div class="high-score">High Score: <span id="high-score-val">0</span></div>
+            </main>
+        </section>
+
+        <!-- Game Screen -->
+        <section id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="stat">Word: <span id="word-hint">_ _ _</span></div>
+                <div class="stat">Time: <span id="timer">60</span>s</div>
+                <div class="stat">Score: <span id="current-score">0</span></div>
+            </div>
+            <div class="canvas-container">
+                <canvas id="drawing-canvas"></canvas>
+            </div>
+            <div class="game-toolbar">
+                <div class="tool-group">
+                    <button id="tool-pencil" class="tool-btn active" title="Pencil">✏️</button>
+                    <button id="tool-fill" class="tool-btn" title="Paint Bucket">🪣</button>
+                    <button id="tool-eraser" class="tool-btn" title="Eraser">🧽</button>
+                    <button id="tool-undo" class="tool-btn" title="Undo">↩️</button>
+                    <input type="color" id="color-picker" value="#000000">
+                    <input type="range" id="brush-size" min="1" max="20" value="5">
+                </div>
+                <div class="tool-group">
+                    <button id="clear-canvas" class="btn-secondary">Clear</button>
+                    <button id="submit-drawing" class="btn-primary">Submit</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Screen -->
+        <section id="results-screen" class="screen">
+            <h2>Game Over!</h2>
+            <div class="results-data">
+                <p>The word was: <strong id="final-word">???</strong></p>
+                <p>Time Taken: <span id="time-taken">0</span>s</p>
+                <p>Score Earned: <span id="score-earned">0</span></p>
+            </div>
+            <div class="actions">
+                <button id="play-again" class="btn-primary">Play Again</button>
+                <button id="go-home" class="btn-secondary">Home</button>
+            </div>
+        </section>
+    </div>
+    <script src="main.js" type="module"></script>
+</body>
+
+</html>

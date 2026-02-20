@@ -1,0 +1,21 @@
+{
+  "name": "scribbleplay",
+  "version": "1.0.0",
+  "description": "ScribblePlay MVP Drawing Game",
+  "type": "module",
+  "scripts": {
+    "dev": "npx vite",
+    "build": "npx vite build",
+    "preview": "npx vite preview"
+  },
+  "keywords": [
+    "game",
+    "drawing",
+    "scribble"
+  ],
+  "author": "Antigravity",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

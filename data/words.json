@@ -1,0 +1,297 @@
+[
+  {
+    "word": "Cat",
+    "difficulty": "Easy",
+    "clue": "A common furry pet that says meow."
+  },
+  {
+    "word": "House",
+    "difficulty": "Easy",
+    "clue": "A place where people live."
+  },
+  {
+    "word": "Apple",
+    "difficulty": "Easy",
+    "clue": "A round red or green fruit."
+  },
+  {
+    "word": "Car",
+    "difficulty": "Easy",
+    "clue": "A vehicle with four wheels."
+  },
+  {
+    "word": "Tree",
+    "difficulty": "Easy",
+    "clue": "A tall plant with a trunk and leaves."
+  },
+  {
+    "word": "Mountain",
+    "difficulty": "Medium",
+    "clue": "A very tall natural elevation of the earth's surface."
+  },
+  {
+    "word": "Elephant",
+    "difficulty": "Medium",
+    "clue": "The largest land animal with a trunk."
+  },
+  {
+    "word": "Bicycle",
+    "difficulty": "Medium",
+    "clue": "A vehicle with two wheels that you pedal."
+  },
+  {
+    "word": "Guitar",
+    "difficulty": "Medium",
+    "clue": "A musical instrument with six strings."
+  },
+  {
+    "word": "Telescope",
+    "difficulty": "Hard",
+    "clue": "An instrument used to look at distant stars."
+  },
+  {
+    "word": "Microscope",
+    "difficulty": "Hard",
+    "clue": "An instrument used to see very small objects."
+  },
+  {
+    "word": "Labyrinth",
+    "difficulty": "Hard",
+    "clue": "A complicated irregular network of passages or paths."
+  },
+  {
+    "word": "Mug",
+    "difficulty": "Easy",
+    "clue": "Something you use to drink hot coffee or tea."
+  },
+  {
+    "word": "Candle",
+    "difficulty": "Easy",
+    "clue": "A stick of wax that gives light when lit."
+  },
+  {
+    "word": "Lightbulb",
+    "difficulty": "Medium",
+    "clue": "An object that produces light when electricity flows through it."
+  },
+  {
+    "word": "Key",
+    "difficulty": "Easy",
+    "clue": "A small metal object used to open locks."
+  },
+  {
+    "word": "Book",
+    "difficulty": "Easy",
+    "clue": "Something you read with many pages."
+  },
+  {
+    "word": "Pencil",
+    "difficulty": "Easy",
+    "clue": "An instrument used for writing or drawing."
+  },
+  {
+    "word": "Scissors",
+    "difficulty": "Medium",
+    "clue": "A tool used for cutting paper or fabric."
+  },
+  {
+    "word": "Eyeglasses",
+    "difficulty": "Medium",
+    "clue": "Something worn on the face to help people see better."
+  },
+  {
+    "word": "Comb",
+    "difficulty": "Easy",
+    "clue": "A tool used to tidy your hair."
+  },
+  {
+    "word": "Toothbrush",
+    "difficulty": "Easy",
+    "clue": "Something you use with paste to clean your teeth."
+  },
+  {
+    "word": "Bar of Soap",
+    "difficulty": "Easy",
+    "clue": "Used with water for washing your hands."
+  },
+  {
+    "word": "Spoon",
+    "difficulty": "Easy",
+    "clue": "Used for eating soup or cereal."
+  },
+  {
+    "word": "Fork",
+    "difficulty": "Easy",
+    "clue": "A tool with prongs used for eating."
+  },
+  {
+    "word": "Knife",
+    "difficulty": "Easy",
+    "clue": "A sharp tool used for cutting food."
+  },
+  {
+    "word": "Bottle",
+    "difficulty": "Easy",
+    "clue": "A container for liquids, often made of glass or plastic."
+  },
+  {
+    "word": "Jar",
+    "difficulty": "Easy",
+    "clue": "A wide-mouthed cylindrical container."
+  },
+  {
+    "word": "Lamp",
+    "difficulty": "Medium",
+    "clue": "A device that provides light in a room."
+  },
+  {
+    "word": "Chair",
+    "difficulty": "Easy",
+    "clue": "Something you sit on."
+  },
+  {
+    "word": "Table",
+    "difficulty": "Easy",
+    "clue": "Furniture with a flat top and legs."
+  },
+  {
+    "word": "Umbrella",
+    "difficulty": "Medium",
+    "clue": "Protects you from the rain."
+  },
+  {
+    "word": "Clock",
+    "difficulty": "Medium",
+    "clue": "Shows you what time it is."
+  },
+  {
+    "word": "Mirror",
+    "difficulty": "Medium",
+    "clue": "Reflects your image back at you."
+  },
+  {
+    "word": "Pillow",
+    "difficulty": "Easy",
+    "clue": "Something soft to rest your head on when sleeping."
+  },
+  {
+    "word": "Candlestick",
+    "difficulty": "Hard",
+    "clue": "A holder for a candle."
+  },
+  {
+    "word": "Wallet",
+    "difficulty": "Medium",
+    "clue": "A small folding case for holding money."
+  },
+  {
+    "word": "Banana",
+    "difficulty": "Easy",
+    "clue": "A long yellow fruit."
+  },
+  {
+    "word": "Grapes",
+    "difficulty": "Easy",
+    "clue": "Small round green or purple fruits that grow in bunches."
+  },
+  {
+    "word": "Pizza slice",
+    "difficulty": "Medium",
+    "clue": "A triangular piece of cheesy Italian food."
+  },
+  {
+    "word": "Ice cream cone",
+    "difficulty": "Medium",
+    "clue": "A cold sweet treat served in a wafer."
+  },
+  {
+    "word": "Cookie",
+    "difficulty": "Easy",
+    "clue": "A small sweet baked treat."
+  },
+  {
+    "word": "Lollipop",
+    "difficulty": "Easy",
+    "clue": "Hard candy on a stick."
+  },
+  {
+    "word": "Bread slice",
+    "difficulty": "Easy",
+    "clue": "A piece of food used for making sandwiches."
+  },
+  {
+    "word": "Cheese wedge",
+    "difficulty": "Medium",
+    "clue": "A triangular piece of yellow dairy product."
+  },
+  {
+    "word": "Sushi roll",
+    "difficulty": "Hard",
+    "clue": "Japanese food made with rice and seaweed."
+  },
+  {
+    "word": "Leaf",
+    "difficulty": "Easy",
+    "clue": "A green part of a tree that falls off in autumn."
+  },
+  {
+    "word": "Daisy",
+    "difficulty": "Medium",
+    "clue": "A white flower with a yellow center."
+  },
+  {
+    "word": "Cloud",
+    "difficulty": "Easy",
+    "clue": "A white fluffy object in the sky."
+  },
+  {
+    "word": "Sun",
+    "difficulty": "Easy",
+    "clue": "The big bright star in the sky during the day."
+  },
+  {
+    "word": "Moon",
+    "difficulty": "Easy",
+    "clue": "The bright object in the sky at night."
+  },
+  {
+    "word": "Star",
+    "difficulty": "Easy",
+    "clue": "A tiny twinkling light in the night sky."
+  },
+  {
+    "word": "Mushroom",
+    "difficulty": "Medium",
+    "clue": "A fungus with a cap and a stem."
+  },
+  {
+    "word": "Cactus",
+    "difficulty": "Medium",
+    "clue": "A prickly desert plant."
+  },
+  {
+    "word": "T-shirt",
+    "difficulty": "Easy",
+    "clue": "A casual short-sleeved top."
+  },
+  {
+    "word": "Socks",
+    "difficulty": "Easy",
+    "clue": "Coverings worn on your feet inside shoes."
+  },
+  {
+    "word": "Hat",
+    "difficulty": "Easy",
+    "clue": "Something worn on your head."
+  },
+  {
+    "word": "Button",
+    "difficulty": "Easy",
+    "clue": "A small round fastener on clothes."
+  },
+  {
+    "word": "Feather",
+    "difficulty": "Medium",
+    "clue": "What birds are covered in."
+  }
+]
