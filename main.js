@@ -20,7 +20,10 @@ const state = {
     currentTool: 'pencil',
     undoStack: [],
     maxUndo: 20,
-    highScore: localStorage.getItem('scribble_highscore') || 0
+    highScore: localStorage.getItem('scribble_highscore') || 0,
+    drawnCount: 0,
+    targetCount: 0,
+    sessionWords: []
 };
 
 // --- DOM Elements ---
@@ -70,7 +73,7 @@ function setupEventListeners() {
 
     // Game Actions
     document.getElementById('clear-canvas').addEventListener('click', clearCanvas);
-    document.getElementById('submit-drawing').addEventListener('click', endGame);
+    document.getElementById('submit-drawing').addEventListener('click', submitDrawing);
 
     // Tools
     document.getElementById('tool-pencil').addEventListener('click', () => setTool('pencil'));
@@ -159,27 +162,58 @@ function setupEventListeners() {
 // --- Game Logic ---
 function startGame() {
     state.difficulty = document.getElementById('difficulty').value;
-    const filteredWords = state.words.filter(w => w.difficulty === state.difficulty);
-    const randomWordObj = filteredWords[Math.floor(Math.random() * filteredWords.length)];
-    state.currentWord = randomWordObj ? randomWordObj.word : 'Scribble';
 
+    // Set target count based on difficulty
+    if (state.difficulty === 'Easy') state.targetCount = 8;
+    else if (state.difficulty === 'Medium') state.targetCount = 12;
+    else if (state.difficulty === 'Hard') state.targetCount = 15;
+
+    // Filter and Shuffle words
+    const filtered = state.words.filter(w => w.difficulty === state.difficulty);
+    state.sessionWords = [...filtered].sort(() => 0.5 - Math.random());
+
+    state.drawnCount = 0;
     state.timer = 60;
     state.score = 0;
     state.startTime = Date.now();
     state.currentTool = 'pencil';
-    state.undoStack = []; // Reset undo history
+    state.undoStack = [];
 
-    switchScreen('game'); // Switch screen FIRST
+    switchScreen('game');
 
     setTimeout(() => {
         setTool('pencil');
-        resizeCanvas(); // Resize AFTER switch to get correct dimensions
-        clearCanvas();
-        updateDisplays();
+        resizeCanvas();
+        nextWord();
         startTimer();
-        // Feedback Message Toast
-        showFeedback("Ready? Draw the " + state.currentWord + "!");
     }, 50);
+}
+
+function nextWord() {
+    if (state.drawnCount >= state.targetCount) {
+        endGame();
+        return;
+    }
+
+    const wordIdx = state.drawnCount % state.sessionWords.length;
+    const wordObj = state.sessionWords[wordIdx] || { word: 'Scribble', clue: 'Just draw something!' };
+    state.currentWord = wordObj.word;
+    state.currentClue = wordObj.clue;
+
+    clearCanvas();
+    updateDisplays();
+    showFeedback(`Draw ${state.drawnCount + 1}/${state.targetCount}: ${state.currentWord}`);
+}
+
+function submitDrawing() {
+    state.drawnCount++;
+    state.score += 10; // 10 points per completed drawing
+
+    if (state.drawnCount >= state.targetCount) {
+        endGame();
+    } else {
+        nextWord();
+    }
 }
 
 function startTimer() {
@@ -197,8 +231,10 @@ function endGame() {
     clearInterval(state.timerInterval);
 
     const timeTaken = Math.floor((Date.now() - state.startTime) / 1000);
-    // Simple Scoring: Max 100 - TimeTaken
-    state.score = Math.max(0, 100 - timeTaken);
+    // Score is current state.score + time bonus if all completed
+    if (state.drawnCount >= state.targetCount) {
+        state.score += Math.max(0, 60 - timeTaken);
+    }
 
     if (state.score > state.highScore) {
         state.highScore = state.score;
@@ -206,7 +242,7 @@ function endGame() {
         highScoreDisplay.textContent = state.highScore;
     }
 
-    document.getElementById('final-word').textContent = state.currentWord;
+    document.getElementById('final-word').textContent = `${state.drawnCount}/${state.targetCount} Images`;
     document.getElementById('time-taken').textContent = timeTaken;
     document.getElementById('score-earned').textContent = state.score;
 
@@ -214,7 +250,7 @@ function endGame() {
     if (supabaseClient) {
         supabaseClient.from('game_sessions').insert([
             {
-                word: state.currentWord,
+                word: `${state.drawnCount} drawings`,
                 score: state.score,
                 time_taken: timeTaken
             }
@@ -335,10 +371,10 @@ function hexToRgb(hex) {
 
 
 function updateDisplays() {
-    // Reveal the whole word instead of underscores
-    wordHintDisplay.textContent = state.currentWord;
+    wordHintDisplay.innerHTML = `${state.currentWord} <small style="display:block; font-size: 0.8rem; font-weight: normal; opacity: 0.8;">${state.currentClue || ''}</small>`;
     timerDisplay.textContent = state.timer;
     scoreDisplay.textContent = state.score;
+    document.getElementById('progress').textContent = `${state.drawnCount}/${state.targetCount}`;
 }
 
 function showFeedback(msg) {
