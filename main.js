@@ -125,7 +125,7 @@ function setupEventListeners() {
         ctx.lineJoin = 'round';
 
         if (state.currentTool === 'eraser') {
-            ctx.strokeStyle = '#ffffff';
+            ctx.strokeStyle = '#1e1e1e';
             ctx.lineWidth = document.getElementById('brush-size').value * 4;
         } else {
             ctx.strokeStyle = document.getElementById('color-picker').value;
@@ -249,7 +249,7 @@ function resizeCanvas() {
 }
 
 function clearCanvas() {
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#1e1e1e';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Reset path state
@@ -285,7 +285,7 @@ function undo() {
     const img = new Image();
     img.src = previousState;
     img.onload = () => {
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#1e1e1e';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0);
     };
