@@ -23,14 +23,16 @@ const state = {
     highScore: localStorage.getItem('scribble_highscore') || 0,
     drawnCount: 0,
     targetCount: 0,
-    sessionWords: []
+    sessionWords: [],
+    isPaused: false
 };
 
 // --- DOM Elements ---
 const screens = {
     home: document.getElementById('home-screen'),
     game: document.getElementById('game-screen'),
-    results: document.getElementById('results-screen')
+    results: document.getElementById('results-screen'),
+    pauseOverlay: document.getElementById('pause-overlay')
 };
 
 const canvas = document.getElementById('drawing-canvas');
@@ -81,6 +83,10 @@ function setupEventListeners() {
     document.getElementById('tool-eraser').addEventListener('click', () => setTool('eraser'));
     document.getElementById('tool-undo').addEventListener('click', undo);
 
+    // Pause functionality
+    document.getElementById('pause-game').addEventListener('click', togglePause);
+    document.getElementById('resume-game').addEventListener('click', togglePause);
+
     // Canvas Drawing
     let isDrawing = false;
 
@@ -97,6 +103,7 @@ function setupEventListeners() {
     };
 
     const startDrawing = (e) => {
+        if (state.isPaused) return;
         if (state.currentTool === 'fill') {
             const coords = getCoordinates(e);
             floodFill(Math.floor(coords.x), Math.floor(coords.y));
@@ -119,7 +126,7 @@ function setupEventListeners() {
     };
 
     const draw = (e) => {
-        if (!isDrawing) return;
+        if (!isDrawing || state.isPaused) return;
 
         const coords = getCoordinates(e);
 
@@ -178,6 +185,8 @@ function startGame() {
     state.startTime = Date.now();
     state.currentTool = 'pencil';
     state.undoStack = [];
+    state.isPaused = false;
+    screens.pauseOverlay.classList.remove('active');
 
     switchScreen('game');
 
@@ -216,9 +225,21 @@ function submitDrawing() {
     }
 }
 
+function togglePause() {
+    state.isPaused = !state.isPaused;
+    screens.pauseOverlay.classList.toggle('active', state.isPaused);
+
+    if (state.isPaused) {
+        showFeedback("Game Paused");
+    } else {
+        showFeedback("Game Resumed");
+    }
+}
+
 function startTimer() {
     if (state.timerInterval) clearInterval(state.timerInterval);
     state.timerInterval = setInterval(() => {
+        if (state.isPaused) return;
         state.timer--;
         timerDisplay.textContent = state.timer;
         if (state.timer <= 0) {
