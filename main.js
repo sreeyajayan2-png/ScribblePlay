@@ -13,7 +13,8 @@ const state = {
     difficulty: 'Easy',
     words: [],
     currentWord: '',
-    timer: 60,
+    currentClue: '',
+    timer: 300,
     timerInterval: null,
     score: 0,
     startTime: 0,
@@ -32,7 +33,9 @@ const screens = {
     home: document.getElementById('home-screen'),
     game: document.getElementById('game-screen'),
     results: document.getElementById('results-screen'),
-    pauseOverlay: document.getElementById('pause-overlay')
+    pauseOverlay: document.getElementById('pause-overlay'),
+    referenceImg: document.getElementById('reference-image'),
+    accuracyVal: document.getElementById('accuracy-val')
 };
 
 const canvas = document.getElementById('drawing-canvas');
@@ -180,7 +183,7 @@ function startGame() {
     state.sessionWords = [...filtered].sort(() => 0.5 - Math.random());
 
     state.drawnCount = 0;
-    state.timer = 60;
+    state.timer = 300;
     state.score = 0;
     state.startTime = Date.now();
     state.currentTool = 'pencil';
@@ -199,30 +202,87 @@ function startGame() {
 }
 
 function nextWord() {
-    if (state.drawnCount >= state.targetCount) {
+    const wordIdx = state.drawnCount;
+    // Don't repeat words - ensure we have words left
+    if (wordIdx >= state.sessionWords.length || wordIdx >= state.targetCount) {
         endGame();
         return;
     }
 
-    const wordIdx = state.drawnCount % state.sessionWords.length;
-    const wordObj = state.sessionWords[wordIdx] || { word: 'Scribble', clue: 'Just draw something!' };
+    const wordObj = state.sessionWords[wordIdx];
     state.currentWord = wordObj.word;
     state.currentClue = wordObj.clue;
+
+    // Load reference image (using public Icon API)
+    screens.referenceImg.src = `https://api.dicebear.com/7.x/shapes/svg?seed=${wordObj.word.toLowerCase()}&backgroundColor=ffffff`;
 
     clearCanvas();
     updateDisplays();
     showFeedback(`Draw ${state.drawnCount + 1}/${state.targetCount}: ${state.currentWord}`);
 }
 
-function submitDrawing() {
+async function submitDrawing() {
+    const accuracy = await calculateAccuracy();
+
+    if (accuracy < 40) {
+        showFeedback(`Need more detail! Current accuracy: ${Math.round(accuracy)}% (Need 40%)`);
+        return;
+    }
+
     state.drawnCount++;
-    state.score += 10; // 10 points per completed drawing
+    state.score += 10 + Math.floor(accuracy / 10);
 
     if (state.drawnCount >= state.targetCount) {
         endGame();
     } else {
         nextWord();
     }
+}
+
+async function calculateAccuracy() {
+    return new Promise((resolve) => {
+        const size = 64; // Small resolution for comparison
+        const compareCanvas = document.createElement('canvas');
+        compareCanvas.width = size;
+        compareCanvas.height = size;
+        const cCtx = compareCanvas.getContext('2d');
+
+        // 1. Capture user drawing
+        cCtx.drawImage(canvas, 0, 0, size, size);
+        const userData = cCtx.getImageData(0, 0, size, size).data;
+
+        // 2. Load and capture reference
+        const refImg = new Image();
+        refImg.crossOrigin = "anonymous";
+        refImg.src = screens.referenceImg.src;
+        refImg.onload = () => {
+            cCtx.clearRect(0, 0, size, size);
+            cCtx.drawImage(refImg, 0, 0, size, size);
+            const refData = cCtx.getImageData(0, 0, size, size).data;
+
+            // 3. Compare pixel density
+            let activeMatches = 0;
+            let totalRefActive = 0;
+
+            for (let i = 0; i < userData.length; i += 4) {
+                // Check if pixel is "active" (not white)
+                const isUserActive = userData[i] < 240 || userData[i + 1] < 240 || userData[i + 2] < 240;
+                const isRefActive = refData[i] < 240 || refData[i + 1] < 240 || refData[i + 2] < 240;
+
+                if (isRefActive) totalRefActive++;
+                if (isRefActive && isUserActive) activeMatches++;
+            }
+
+            // Accuracy based on how much of the reference the user covered
+            const accuracy = totalRefActive > 0 ? (activeMatches / totalRefActive) * 100 : 0;
+
+            // Scaled accuracy for better user experience
+            const scaledAccuracy = Math.min(100, accuracy * 2);
+            screens.accuracyVal.textContent = `${Math.round(scaledAccuracy)}%`;
+            resolve(scaledAccuracy);
+        };
+        refImg.onerror = () => resolve(50); // Safe fallback
+    });
 }
 
 function togglePause() {

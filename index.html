@@ -35,8 +35,13 @@
         <section id="game-screen" class="screen">
             <div class="game-header">
                 <div class="stat">Word: <span id="word-hint">_ _ _</span></div>
-                <div class="stat">Time: <span id="timer">60</span>s</div>
+                <div class="stat reference-box">
+                    <span>Reference:</span>
+                    <img id="reference-image" src="" alt="Reference">
+                </div>
+                <div class="stat">Time: <span id="timer">300</span>s</div>
                 <div class="stat">Draw: <span id="progress">0/8</span></div>
+                <div class="stat">Accuracy: <span id="accuracy-val">0%</span></div>
                 <div class="stat">Score: <span id="current-score">0</span></div>
                 <button id="pause-game" class="tool-btn" title="Pause">⏸️</button>
             </div>
